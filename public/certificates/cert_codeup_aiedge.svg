@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" width="100%" height="100%">
+  <defs>
+    <pattern id="codeup-bg-icons" width="80" height="80" patternUnits="userSpaceOnUse" opacity="0.08">
+      <path d="M15 25 L25 15 L20 10 M40 10 L50 20 L45 25" fill="none" stroke="#263238" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="55" cy="55" r="10" fill="none" stroke="#263238" stroke-width="2"/>
+      <path d="M52 65 L58 65 M53 68 L57 68" stroke="#263238" stroke-width="2"/>
+      <rect x="10" y="45" width="18" height="24" rx="2" fill="none" stroke="#263238" stroke-width="2"/>
+      <line x1="14" y1="52" x2="24" y2="52" stroke="#263238" stroke-width="1.5"/>
+      <line x1="14" y1="57" x2="24" y2="57" stroke="#263238" stroke-width="1.5"/>
+      <line x1="14" y1="62" x2="20" y2="62" stroke="#263238" stroke-width="1.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background left white, right dark slate -->
+  <rect width="750" height="750" fill="#FFFFFF"/>
+  <rect width="750" height="750" fill="url(#codeup-bg-icons)"/>
+  
+  <!-- Right dark bar -->
+  <rect x="750" y="0" width="250" height="750" fill="#252D37"/>
+  
+  <!-- Vertical Watermark on Dark Bar -->
+  <g fill="#374151" opacity="0.7" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="900">
+    <text x="875" y="320" font-size="160" text-anchor="middle" letter-spacing="4">AI</text>
+    <text x="875" y="550" font-size="110" text-anchor="middle" letter-spacing="4">EDGE</text>
+  </g>
+
+  <!-- CodeUp Brand Logo -->
+  <g transform="translate(70, 60)">
+    <text x="0" y="36" font-family="system-ui, sans-serif" font-weight="800" font-size="38" fill="#111827" letter-spacing="-1">code</text>
+    <text x="96" y="36" font-family="system-ui, sans-serif" font-weight="800" font-size="38" fill="#00D084" letter-spacing="-1">up</text>
+    <path d="M142 12 C146 16, 146 24, 142 28" fill="none" stroke="#00D084" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Title: Certificate -->
+  <text x="70" y="225" font-family="'Georgia', serif" font-weight="bold" font-size="62" fill="#111827" letter-spacing="0.5">Certificate</text>
+
+  <!-- Subtitle: OF AI EDGE INTERNSHIP PROGRAM -->
+  <text x="70" y="270" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="17" fill="#111827" letter-spacing="2">OF AI EDGE INTERNSHIP PROGRAM</text>
+
+  <!-- Presented to -->
+  <text x="70" y="315" font-family="system-ui, sans-serif" font-size="16" fill="#374151">This Certificate is presented to</text>
+
+  <!-- Recipient: Dipesh -->
+  <text x="70" y="390" font-family="system-ui, sans-serif" font-weight="800" font-size="46" fill="#00D084" letter-spacing="0.5">Dipesh</text>
+
+  <!-- Description -->
+  <text x="70" y="445" font-family="system-ui, sans-serif" font-size="16" fill="#1F2937">for the successful completion of 15-Day AI Edge Internship</text>
+  <text x="70" y="475" font-family="system-ui, sans-serif" font-size="16" fill="#1F2937">Program, conducted from 22 June to 08 July 2026.</text>
+
+  <!-- Signature section -->
+  <g transform="translate(70, 600)">
+    <!-- Priyanka Jangid Signature -->
+    <path d="M 5 30 Q 30 10, 45 35 T 70 20 Q 85 5, 100 25 T 120 15 Q 135 10, 150 22" fill="none" stroke="#1F2937" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="25" y="20" font-family="'Brush Script MT', 'Segoe Script', cursive" font-size="28" fill="#1F2937">Priyanka Jangid</text>
+    <text x="10" y="65" font-family="system-ui, sans-serif" font-weight="800" font-size="12" fill="#111827" letter-spacing="1.5">SIGNATURE</text>
+  </g>
+
+  <!-- Date section -->
+  <g transform="translate(500, 630)">
+    <text x="0" y="0" font-family="system-ui, sans-serif" font-size="13" fill="#1F2937">10 July 2026</text>
+    <text x="15" y="35" font-family="system-ui, sans-serif" font-weight="800" font-size="12" fill="#111827" letter-spacing="1.5">DATE</text>
+  </g>
+</svg>

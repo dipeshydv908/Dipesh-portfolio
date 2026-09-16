@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 1200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="lw-pill-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#F97316"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Clean white background with soft gradient -->
+  <rect width="850" height="1200" fill="#FFFFFF"/>
+
+  <!-- Top Geometric constellation mesh in top right -->
+  <g transform="translate(480, 40)" opacity="0.85">
+    <line x1="50" y1="120" x2="150" y2="50" stroke="#EF4444" stroke-width="1.5"/>
+    <line x1="150" y1="50" x2="280" y2="70" stroke="#A855F7" stroke-width="1.5"/>
+    <line x1="150" y1="50" x2="190" y2="180" stroke="#3B82F6" stroke-width="1.5"/>
+    <line x1="50" y1="120" x2="190" y2="180" stroke="#F59E0B" stroke-width="1.5"/>
+    <line x1="190" y1="180" x2="280" y2="70" stroke="#06B6D4" stroke-width="1.5"/>
+    <line x1="280" y1="70" x2="330" y2="190" stroke="#EC4899" stroke-width="1.5"/>
+    <line x1="190" y1="180" x2="270" y2="280" stroke="#10B981" stroke-width="1.5"/>
+    <line x1="280" y1="70" x2="270" y2="280" stroke="#8B5CF6" stroke-width="1.5"/>
+    <line x1="330" y1="190" x2="270" y2="280" stroke="#3B82F6" stroke-width="1.5"/>
+    
+    <!-- Nodes -->
+    <circle cx="50" cy="120" r="4" fill="#EF4444"/>
+    <circle cx="150" cy="50" r="5" fill="#A855F7"/>
+    <circle cx="280" cy="70" r="4" fill="#3B82F6"/>
+    <circle cx="190" cy="180" r="6" fill="#F59E0B"/>
+    <circle cx="330" cy="190" r="5" fill="#EC4899"/>
+    <circle cx="270" cy="280" r="5" fill="#10B981"/>
+  </g>
+
+  <!-- Right Watermark text -->
+  <g transform="translate(800, 600) rotate(90)" fill="#E2E8F0" font-family="system-ui, sans-serif" font-weight="900" font-size="64" letter-spacing="8" opacity="0.6">
+    <text text-anchor="middle">LEARN TO LEAD</text>
+  </g>
+
+  <!-- Left Header: LinuxWorld Logo & #13 -->
+  <g transform="translate(60, 60)">
+    <!-- Red W stylized -->
+    <path d="M 5 10 L 15 45 L 25 25 L 35 45 L 45 10" fill="none" stroke="#DC2626" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="60" y="32" font-family="system-ui, sans-serif" font-weight="900" font-size="18" fill="#1E293B" letter-spacing="1">LINUXWORLD</text>
+    
+    <text x="195" y="38" font-family="system-ui, sans-serif" font-weight="900" font-size="44" fill="#1E293B">#13</text>
+    <text x="195" y="54" font-family="system-ui, sans-serif" font-weight="700" font-size="11" fill="#64748B" letter-spacing="0.5">LEARN TO LEAD</text>
+  </g>
+
+  <!-- Main Certificate Title -->
+  <text x="60" y="240" font-family="system-ui, sans-serif" font-weight="800" font-size="48" fill="#1E293B" letter-spacing="1">CERTIFICATE</text>
+  <text x="60" y="300" font-family="system-ui, sans-serif" font-weight="800" font-size="48" fill="#1E293B" letter-spacing="1">OF TRAINING</text>
+
+  <!-- Gradient Pill Banner -->
+  <rect x="60" y="340" width="370" height="36" rx="18" fill="url(#lw-pill-grad)"/>
+  <text x="80" y="364" font-family="system-ui, sans-serif" font-weight="600" font-size="15" fill="#FFFFFF">This Certificate is hereby bestowed upon</text>
+
+  <!-- Recipient Name: Dipesh -->
+  <text x="60" y="450" font-family="system-ui, sans-serif" font-weight="900" font-size="56" fill="#0F172A">Dipesh</text>
+
+  <!-- Subheading -->
+  <text x="60" y="505" font-family="system-ui, sans-serif" font-weight="700" font-size="19" fill="#1E293B">For attending an exceptional in-depth</text>
+
+  <!-- Program Name: Python with AWS Cloud Training -->
+  <g font-family="system-ui, sans-serif" font-weight="900" font-size="34">
+    <text x="60" y="555" fill="#00D084">Python with </text>
+    <text x="270" y="555" fill="#F97316">AWS Cloud Training</text>
+  </g>
+
+  <!-- Detailed description paragraph -->
+  <g font-family="system-ui, sans-serif" font-size="13" fill="#334155">
+    <text x="60" y="605">A 20+ hours of hands-on Python with AWS Cloud training featuring</text>
+    <text x="60" y="627">practical demonstrations and real-world projects that covered Python</text>
+    <text x="60" y="649">Fundamentals | Data Types | Operators | Strings | Conditional</text>
+    <text x="60" y="671">Statements | Loops | Functions | Collections | File Handling | Exception</text>
+    <text x="60" y="693">Handling | Object-Oriented Programming (OOP) | Modules &amp; Packages |</text>
+    <text x="60" y="715">REST APIs &amp; JSON | Cloud Computing Fundamentals | IAM | AWS CLI |</text>
+    <text x="60" y="737">Boto3 | Amazon EC2 | Amazon S3 | Amazon DynamoDB | AWS Lambda |</text>
+    <text x="60" y="759">Amazon SNS | Amazon CloudWatch | Infrastructure Automation |</text>
+    <text x="60" y="781">Logging | Security Best Practices | Production-Ready Automation | <tspan font-weight="bold">5</tspan></text>
+    <text x="60" y="803"><tspan font-weight="bold">Real-World Cloud Projects</tspan> under the mentorship of Syed Jibbran Ali Sir.</text>
+  </g>
+
+  <!-- Footer Signatures and Verification -->
+  <g transform="translate(60, 960)">
+    <text x="0" y="0" font-family="system-ui, sans-serif" font-size="14" fill="#1E293B" font-weight="600">Certificate no</text>
+    <text x="110" y="0" font-family="system-ui, sans-serif" font-size="14" fill="#475569" font-weight="500">LW-JPR-2026-5309</text>
+    
+    <text x="0" y="30" font-family="system-ui, sans-serif" font-size="14" fill="#1E293B" font-weight="600">Date</text>
+    <text x="110" y="30" font-family="system-ui, sans-serif" font-size="14" fill="#475569" font-weight="500">13<tspan font-size="10" dy="-4">th</tspan><tspan font-size="14" dy="4"> July - 27</tspan><tspan font-size="10" dy="-4">th</tspan><tspan font-size="14" dy="4"> July, 2026</tspan></text>
+  </g>
+
+  <!-- Right Signature: Vimal Daga -->
+  <g transform="translate(500, 930)">
+    <path d="M 15 35 Q 40 10, 60 40 T 90 20 Q 110 5, 140 30" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="15" y="65" font-family="system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E293B">Vimal Daga</text>
+    <text x="15" y="86" font-family="system-ui, sans-serif" font-size="13" fill="#64748B">Founder - #13</text>
+  </g>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <!-- Outer Dark Border -->
+  <rect width="1000" height="700" fill="#1E293B"/>
+  <rect x="8" y="8" width="984" height="684" fill="#FFFFFF"/>
+
+  <!-- Flowing Abstract Ribbon Waves at Top -->
+  <path d="M 0 0 C 300 120, 600 -40, 1000 70 L 1000 0 Z" fill="#0284C7" opacity="0.9"/>
+  <path d="M 0 50 C 400 160, 700 0, 1000 140 L 1000 0 L 0 0 Z" fill="#0F172A" opacity="0.95"/>
+  <path d="M 0 90 C 350 20, 650 150, 1000 30" fill="none" stroke="#F59E0B" stroke-width="2.5" opacity="0.8"/>
+  <path d="M 300 200 C 600 400, 800 500, 1000 600" fill="none" stroke="#E2E8F0" stroke-width="2"/>
+
+  <!-- TCS iON Logo (top left) -->
+  <g transform="translate(30, 45)">
+    <text x="0" y="32" font-family="system-ui, sans-serif" font-weight="900" font-size="34" fill="#0F172A" letter-spacing="-1">tcs</text>
+    <text x="50" y="32" font-family="system-ui, sans-serif" font-weight="900" font-size="34" fill="#0284C7" letter-spacing="-1">iON</text>
+    <circle cx="56" cy="7" r="4" fill="#0284C7"/>
+  </g>
+
+  <!-- TATA Logo (top right) -->
+  <g transform="translate(900, 45)">
+    <text x="0" y="34" font-family="system-ui, sans-serif" font-weight="900" font-size="18" fill="#0F172A" letter-spacing="4" text-anchor="end">TATA</text>
+    <path d="M -30 8 L -15 26 L 0 8 M -15 10 L -15 25" fill="none" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Certificate Title -->
+  <text x="70" y="240" font-family="system-ui, sans-serif" font-weight="800" font-size="40" fill="#334155">Certificate of Achievement</text>
+  <text x="70" y="280" font-family="system-ui, sans-serif" font-size="17" fill="#475569">Congratulations</text>
+
+  <!-- Recipient Name: Dipesh -->
+  <text x="70" y="340" font-family="system-ui, sans-serif" font-weight="700" font-size="42" fill="#0284C7">Dipesh</text>
+
+  <!-- Course description text -->
+  <text x="70" y="385" font-family="system-ui, sans-serif" font-size="14" fill="#334155">
+    for successfully completing <tspan font-weight="bold">TCS iON Career Edge - Young Professional</tspan> course that covers
+  </text>
+
+  <!-- Course topics modules list -->
+  <g font-family="system-ui, sans-serif" font-size="11.5" fill="#475569">
+    <text x="70" y="415">Communication Skills | Thinking Skills for Workplace Success | Presentation Skills | Soft Skills |</text>
+    <text x="70" y="438">Resume Writing | Group Discussion Skills | Interview Skills | Business Etiquette | Effective Email Writing |</text>
+    <text x="70" y="461">The Problem-Solving Mindset | Accounting Fundamentals | IT Foundational Skills | Overview of Artificial Intelligence</text>
+  </g>
+
+  <!-- Bottom Left Signature -->
+  <g transform="translate(70, 530)">
+    <path d="M 0 30 Q 25 10, 40 32 T 70 20 Q 90 10, 110 25 T 140 18" fill="none" stroke="#334155" stroke-width="2"/>
+    <text x="0" y="25" font-family="'Brush Script MT', cursive" font-size="28" fill="#334155">Mehul Mehta</text>
+    <line x1="0" y1="45" x2="180" y2="45" stroke="#CBD5E1" stroke-width="1.5"/>
+    <text x="0" y="65" font-family="system-ui, sans-serif" font-weight="700" font-size="13" fill="#1E293B">Mehul Mehta</text>
+    <text x="0" y="83" font-family="system-ui, sans-serif" font-size="11" fill="#64748B">Global Delivery Head – TCS iON,</text>
+    <text x="0" y="99" font-family="system-ui, sans-serif" font-size="11" fill="#64748B">Tata Consultancy Services</text>
+  </g>
+
+  <!-- Bottom Right Metadata and Certified Seal -->
+  <g transform="translate(770, 550)">
+    <text x="0" y="0" font-family="system-ui, sans-serif" font-weight="700" font-size="12" fill="#334155">Start Date: <tspan font-weight="normal">29 May 2026</tspan></text>
+    <text x="0" y="22" font-family="system-ui, sans-serif" font-weight="700" font-size="12" fill="#334155">End Date: <tspan font-weight="normal">14 Jun 2026</tspan></text>
+
+    <!-- Certified Badge Seal -->
+    <g transform="translate(0, 50)">
+      <circle cx="20" cy="20" r="18" fill="none" stroke="#0284C7" stroke-width="2.5"/>
+      <path d="M 12 20 L 17 25 L 28 14" fill="none" stroke="#0284C7" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="50" y="16" font-family="system-ui, sans-serif" font-weight="800" font-size="12" fill="#0284C7" letter-spacing="1">CERTIFIED</text>
+      <text x="50" y="30" font-family="system-ui, sans-serif" font-size="8.5" fill="#64748B">Cert ID: 272697-32356944-1016</text>
+      <text x="50" y="42" font-family="system-ui, sans-serif" font-size="8.5" fill="#64748B">Date: 14 Jun 2026</text>
+    </g>
+  </g>
+</svg>
