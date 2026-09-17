@@ -1,8 +1,8 @@
 import { ProjectItem, CertificateItem, ExperienceItem, CreativeItem, EducationItem, SocialLinks } from '../types';
 
 export const INITIAL_SOCIAL_LINKS: SocialLinks = {
-  linkedin: '', // Editable placeholder
-  github: '', // Editable placeholder
+  linkedin: 'https://www.linkedin.com',
+  github: 'https://github.com/dipeshydv908',
   email: 'dipeshydv908@gmail.com',
   resumeUrl: '',
 };
@@ -89,7 +89,7 @@ export const INITIAL_CERTIFICATES: CertificateItem[] = [
     type: '24 Hr. Hackathon Participation & Achievement',
     credentialId: 'GITJ-CF4-2025',
     description: 'Awarded to Dipesh for participating in CODEFIESTA 4.0 (24 Hr. Hackathon) organized by Global Institute of Technology, Jaipur. Powered by H2S, Global Innovation Community Technology Hackathon, Google Developer Group, NAAC A+, IIC, and AICTE.',
-    imageUrl: '/certificates/cert_codefiesta_git.svg',
+    imageUrl: '/certificates/161.png',
     topics: ['24-Hour Rapid Prototyping', 'Software Innovation', 'Teamwork', 'GIT Jaipur', 'Problem Solving'],
     verified: true,
   },
@@ -101,7 +101,7 @@ export const INITIAL_CERTIFICATES: CertificateItem[] = [
     type: 'Python & AWS Cloud Engineering Training',
     credentialId: 'LW-JPR-2026-5309',
     description: 'Bestowed upon Dipesh for attending an exceptional in-depth 20+ hours of hands-on Python with AWS Cloud training featuring practical demonstrations and 5 real-world cloud projects under the mentorship of Syed Jibbran Ali Sir and Vimal Daga (Founder - #13).',
-    imageUrl: '/certificates/cert_linuxworld_aws.svg',
+    imageUrl: '/certificates/Screenshot_20260810-174407.png',
     topics: ['Python OOP', 'AWS CLI & Boto3', 'Amazon EC2 & S3', 'Amazon DynamoDB', 'AWS Lambda', 'Amazon CloudWatch', 'Production Automation'],
     verified: true,
   },
@@ -113,7 +113,7 @@ export const INITIAL_CERTIFICATES: CertificateItem[] = [
     type: 'Professional AI Certification',
     credentialId: 'PLAN-48EB3211A34F',
     description: 'Presented to DIPESH . for the completion of Generative Artificial Intelligence, according to the Your Learning Builder - Plans system of record.',
-    imageUrl: '/certificates/cert_ibm_genai.svg',
+    imageUrl: '/certificates/Screenshot_20260810-173214.png',
     topics: ['Generative Artificial Intelligence', 'Prompt Engineering', 'Foundation Models', 'AI Architecture'],
     verified: true,
   },
@@ -125,7 +125,7 @@ export const INITIAL_CERTIFICATES: CertificateItem[] = [
     type: 'AI Edge Internship Program',
     credentialId: 'CODEUP-AIEDGE-2026',
     description: 'Presented to Dipesh for the successful completion of 15-Day AI Edge Internship Program, conducted from 22 June to 08 July 2026. Signed by Priyanka Jangid.',
-    imageUrl: '/certificates/cert_codeup_aiedge.svg',
+    imageUrl: '/certificates/Screenshot_20260916-222440.png',
     topics: ['15-Day AI Edge Program', 'Machine Learning', 'Python Engineering', 'Edge Computing', 'CodeUp'],
     verified: true,
   },
@@ -137,7 +137,7 @@ export const INITIAL_CERTIFICATES: CertificateItem[] = [
     type: 'Professional Technical & Workplace Certification',
     credentialId: '272697-32356944-1016',
     description: 'Awarded to Dipesh for successfully completing TCS iON Career Edge - Young Professional course covering Communication Skills, Problem-Solving Mindset, Accounting Fundamentals, IT Foundational Skills, and Overview of Artificial Intelligence. Signed by Mehul Mehta, Global Delivery Head – TCS iON.',
-    imageUrl: '/certificates/cert_tcs_career_edge.svg',
+    imageUrl: '/certificates/Screenshot_20260614-083405.png',
     topics: ['IT Foundational Skills', 'Artificial Intelligence Overview', 'Problem Solving', 'Workplace Success', 'Tata Consultancy Services'],
     verified: true,
   }

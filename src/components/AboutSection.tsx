@@ -1,35 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { GraduationCap, MapPin, Calendar, BookOpen, Sparkles, CheckCircle2, Edit3, Award, Terminal, Heart } from 'lucide-react';
+import React from 'react';
+import { GraduationCap, MapPin, Calendar, BookOpen, Sparkles, CheckCircle2, Award, Terminal, Heart } from 'lucide-react';
 import { INITIAL_EDUCATION } from '../data/portfolioData';
-import { EducationItem } from '../types';
 
 export const AboutSection: React.FC = () => {
-  const [education, setEducation] = useState<EducationItem>(() => {
-    const saved = localStorage.getItem('dipesh_education');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (parsed.duration && (parsed.duration.includes('2023') || parsed.duration.includes('2027'))) {
-          parsed.duration = '2025 – 2029';
-          localStorage.setItem('dipesh_education', JSON.stringify(parsed));
-        }
-        return parsed;
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    return INITIAL_EDUCATION;
-  });
-
-  const [isEditingEdu, setIsEditingEdu] = useState(false);
-  const [eduFormData, setEduFormData] = useState<EducationItem>(education);
-
-  const handleSaveEdu = (e: React.FormEvent) => {
-    e.preventDefault();
-    setEducation(eduFormData);
-    localStorage.setItem('dipesh_education', JSON.stringify(eduFormData));
-    setIsEditingEdu(false);
-  };
+  const education = INITIAL_EDUCATION;
 
   const INTERESTS = [
     { title: 'Software Development', icon: 'Code', desc: 'Building scalable logic, robust architectures & clean code' },
@@ -215,84 +189,7 @@ export const AboutSection: React.FC = () => {
                 Education Timeline
               </h3>
             </div>
-
-            <button
-              onClick={() => {
-                setEduFormData(education);
-                setIsEditingEdu(!isEditingEdu);
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white text-xs font-medium border border-slate-700 transition-colors cursor-pointer"
-            >
-              <Edit3 className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{isEditingEdu ? 'Cancel Edit' : 'Edit Education Details'}</span>
-            </button>
           </div>
-
-          {/* Inline Edit Form if enabled */}
-          {isEditingEdu ? (
-            <form onSubmit={handleSaveEdu} className="p-6 rounded-2xl bg-slate-950/80 border border-cyan-500/30 mb-8 space-y-4">
-              <h4 className="text-sm font-semibold text-cyan-300 font-mono">
-                Update Academic Information
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Institution</label>
-                  <input
-                    type="text"
-                    value={eduFormData.institution}
-                    onChange={(e) => setEduFormData({ ...eduFormData, institution: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-cyan-400 focus:outline-none"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Degree &amp; Major</label>
-                  <input
-                    type="text"
-                    value={`${eduFormData.degree} / ${eduFormData.field}`}
-                    onChange={(e) => setEduFormData({ ...eduFormData, field: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-cyan-400 focus:outline-none"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Duration / Years</label>
-                  <input
-                    type="text"
-                    value={eduFormData.duration}
-                    onChange={(e) => setEduFormData({ ...eduFormData, duration: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-cyan-400 focus:outline-none"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Location</label>
-                  <input
-                    type="text"
-                    value={eduFormData.location}
-                    onChange={(e) => setEduFormData({ ...eduFormData, location: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-cyan-400 focus:outline-none"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="flex justify-end gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsEditingEdu(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300 hover:bg-slate-700 cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs cursor-pointer shadow-md shadow-cyan-500/20"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </form>
-          ) : null}
 
           {/* Education Card Item */}
           <div className="relative pl-8 sm:pl-10 border-l-2 border-cyan-500/30 space-y-6">

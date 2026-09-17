@@ -1,47 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Download, Sparkles, Code, Cpu, Layers, Camera, Upload, Check, RotateCcw } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, Download, Sparkles, Code, Cpu, Layers } from 'lucide-react';
 
-const CURRENT_PORTRAIT_KEY = 'dipesh_profile_photo_v3';
-const DEFAULT_PORTRAIT = '/dipesh_original.jpg';
+const PROFILE_PORTRAIT_SRC = '/dipesh_original.jpg';
 
 interface HeroSectionProps {
   onOpenResume: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
-  const [profilePhoto, setProfilePhoto] = useState<string>(() => {
-    // Clear any previous cached photo so genuine uploaded photo is displayed directly
-    if (localStorage.getItem('dipesh_portrait_synced') !== '20260916_v3_original') {
-      localStorage.removeItem('dipesh_profile_photo');
-      localStorage.removeItem('dipesh_profile_photo_v2');
-      localStorage.removeItem(CURRENT_PORTRAIT_KEY);
-      localStorage.setItem('dipesh_portrait_synced', '20260916_v3_original');
-      return DEFAULT_PORTRAIT;
-    }
-    return localStorage.getItem(CURRENT_PORTRAIT_KEY) || DEFAULT_PORTRAIT;
-  });
   const [isPhotoHovered, setIsPhotoHovered] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        setProfilePhoto(result);
-        localStorage.setItem(CURRENT_PORTRAIT_KEY, result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleResetPhoto = () => {
-    setProfilePhoto(DEFAULT_PORTRAIT);
-    localStorage.removeItem(CURRENT_PORTRAIT_KEY);
-    localStorage.removeItem('dipesh_profile_photo');
-    localStorage.removeItem('dipesh_profile_photo_v2');
-  };
 
   const scrollToProjects = () => {
     const el = document.querySelector('#projects');
@@ -137,53 +104,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
             >
               {/* Inner Frame */}
               <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-[#0a0f24] flex items-center justify-center border border-slate-800/80">
-                {profilePhoto ? (
-                  <img
-                    id="profile-portrait-image"
-                    src={profilePhoto}
-                    alt="Dipesh"
-                    className="w-full h-full object-cover object-[center_12%] transition-transform duration-300 group-hover:scale-[1.01]"
-                    referrerPolicy="no-referrer"
-                  />
-                ) : (
-                  /* Elegant Futuristic Developer Silhouette & Portrait Placeholder with Quick Upload */
-                  <div className="relative w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-slate-900/90 via-[#070d22] to-[#040817]">
-                    
-                    {/* Radial Tech Grids */}
-                    <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40" />
-
-                    {/* Developer Avatar Silhouette */}
-                    <div className="relative w-32 h-32 mb-4 rounded-full bg-gradient-to-br from-cyan-500/20 via-slate-800 to-purple-600/30 p-1 flex items-center justify-center border border-cyan-500/30 shadow-xl shadow-cyan-500/10">
-                      <div className="w-full h-full rounded-full bg-[#070b1a] flex items-center justify-center">
-                        <span className="font-display font-extrabold text-4xl bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                          D
-                        </span>
-                      </div>
-                      <div className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-slate-950 shadow-md">
-                        <Check className="w-4 h-4 stroke-[3]" />
-                      </div>
-                    </div>
-
-                    <h3 className="font-display font-bold text-lg text-white mb-1">
-                      Dipesh
-                    </h3>
-                    <p className="text-xs text-cyan-400 font-mono mb-4">
-                      Computer Science Engineering
-                    </p>
-                    <p className="text-xs text-slate-400 leading-relaxed mb-4 max-w-xs">
-                      Global Institute of Technology, Jaipur
-                    </p>
-
-                    {/* Quick Photo Upload Trigger */}
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 text-xs font-semibold cursor-pointer transition-all hover:scale-105"
-                    >
-                      <Upload className="w-3.5 h-3.5" />
-                      <span>Upload Profile Photo</span>
-                    </button>
-                  </div>
-                )}
+                <img
+                  id="profile-portrait-image"
+                  src={PROFILE_PORTRAIT_SRC}
+                  alt="Dipesh"
+                  className="w-full h-full object-cover object-[center_12%] transition-transform duration-300 group-hover:scale-[1.01]"
+                  referrerPolicy="no-referrer"
+                />
 
                 {/* Delicate Bottom Shading for label contrast without obscuring photo */}
                 <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#050711]/75 to-transparent pointer-events-none" />
@@ -198,38 +125,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
                       B.Tech CSE • GIT Jaipur
                     </p>
                   </div>
-
-                  {/* Photo Change Action Icons */}
-                  <div className="flex items-center gap-1.5 pointer-events-auto">
-                    {profilePhoto !== DEFAULT_PORTRAIT && (
-                      <button
-                        onClick={handleResetPhoto}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 text-[10px] font-mono cursor-pointer shadow-lg transition-colors"
-                        title="Reset to official portrait photo"
-                      >
-                        <RotateCcw className="w-3 h-3 text-cyan-400" />
-                        <span>Reset</span>
-                      </button>
-                    )}
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="p-2 rounded-xl bg-slate-900/80 hover:bg-cyan-500 hover:text-slate-950 text-slate-300 border border-slate-700/80 transition-all duration-200 cursor-pointer shadow-lg active:scale-90"
-                      title="Upload / Change Profile Photo"
-                      aria-label="Upload profile photo"
-                    >
-                      <Camera className="w-4 h-4" />
-                    </button>
-                  </div>
                 </div>
-
-                {/* Hidden File Input for uploading portrait */}
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
               </div>
 
               {/* Floating Tech Badges around the frame */}

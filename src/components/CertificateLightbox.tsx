@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Download, ShieldCheck, Calendar, Building2, ExternalLink, Award } from 'lucide-react';
 import { CertificateItem } from '../types';
 
@@ -13,6 +13,14 @@ export const CertificateLightbox: React.FC<CertificateLightboxProps> = ({
   customImage,
   onClose,
 }) => {
+  const [imgSrc, setImgSrc] = useState<string | undefined>(customImage);
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgSrc(customImage);
+    setImgError(false);
+  }, [certificate, customImage]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -64,11 +72,18 @@ export const CertificateLightbox: React.FC<CertificateLightboxProps> = ({
           {/* Subtle Decorative Pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
           
-          {customImage ? (
+          {imgSrc && !imgError ? (
             <div className="relative z-10 w-full flex justify-center items-center">
               <img
-                src={customImage}
+                src={imgSrc}
                 alt={certificate.title}
+                onError={() => {
+                  if (imgSrc.startsWith('/certificates/')) {
+                    setImgSrc(imgSrc.replace('/certificates/', '/'));
+                  } else {
+                    setImgError(true);
+                  }
+                }}
                 className="max-h-[72vh] w-auto max-w-full object-contain rounded-xl shadow-2xl border border-slate-700/60"
                 referrerPolicy="no-referrer"
               />
@@ -172,7 +187,7 @@ export const CertificateLightbox: React.FC<CertificateLightboxProps> = ({
             {customImage && (
               <a
                 href={customImage}
-                download={`${certificate.id}.svg`}
+                download={`${certificate.id}${customImage.includes('.') ? customImage.substring(customImage.lastIndexOf('.')) : ''}`}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-colors cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />

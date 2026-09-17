@@ -1,42 +1,21 @@
-import React, { useState, useRef } from 'react';
-import { Award, ShieldCheck, Calendar, Building2, Eye, Upload, FileCheck, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Award, ShieldCheck, Calendar, Building2, Eye } from 'lucide-react';
 import { INITIAL_CERTIFICATES } from '../data/portfolioData';
 import { CertificateItem } from '../types';
 import { CertificateLightbox } from './CertificateLightbox';
 
 export const CertificatesSection: React.FC = () => {
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
-  const [certImages, setCertImages] = useState<Record<string, string>>(() => {
-    // Check version to avoid stale cached mock placeholders
-    if (localStorage.getItem('dipesh_certs_synced_v') !== '20260916_v4_all5') {
-      localStorage.removeItem('dipesh_cert_images');
-      localStorage.setItem('dipesh_certs_synced_v', '20260916_v4_all5');
-      return {};
-    }
-    const saved = localStorage.getItem('dipesh_cert_images');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    return {};
-  });
+  const [candidatePaths, setCandidatePaths] = useState<Record<string, string>>({});
+  const [imgLoadErrors, setImgLoadErrors] = useState<Record<string, boolean>>({});
 
-  const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
-
-  const handleUploadCertImage = (certId: string, e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        const updated = { ...certImages, [certId]: result };
-        setCertImages(updated);
-        localStorage.setItem('dipesh_cert_images', JSON.stringify(updated));
-      };
-      reader.readAsDataURL(file);
+  const handleImageError = (certId: string, currentSrc: string) => {
+    // If it failed loading from /certificates/161.png, attempt root /161.png
+    if (currentSrc.startsWith('/certificates/')) {
+      const rootFallback = currentSrc.replace('/certificates/', '/');
+      setCandidatePaths((prev) => ({ ...prev, [certId]: rootFallback }));
+    } else {
+      setImgLoadErrors((prev) => ({ ...prev, [certId]: true }));
     }
   };
 
@@ -61,8 +40,6 @@ export const CertificatesSection: React.FC = () => {
         {/* 5 Official Certificates Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {INITIAL_CERTIFICATES.map((cert) => {
-            const currentImg = certImages[cert.id] || cert.imageUrl;
-
             return (
               <div
                 key={cert.id}
@@ -90,17 +67,23 @@ export const CertificatesSection: React.FC = () => {
                     onClick={() => setSelectedCert(cert)}
                     className="relative w-full aspect-[4/3] rounded-2xl bg-[#070b1e] border border-slate-800 flex items-center justify-center p-2 mb-4 cursor-pointer group-hover:border-cyan-500/40 transition-all overflow-hidden shadow-inner"
                   >
-                    {currentImg ? (
+                    {cert.imageUrl && !imgLoadErrors[cert.id] ? (
                       <img
-                        src={currentImg}
+                        src={candidatePaths[cert.id] || cert.imageUrl}
                         alt={cert.title}
+                        onError={() => handleImageError(cert.id, candidatePaths[cert.id] || cert.imageUrl)}
                         className="w-full h-full object-contain rounded-xl transition-transform duration-300 group-hover:scale-[1.02]"
                         referrerPolicy="no-referrer"
                       />
                     ) : (
                       <div className="flex flex-col items-center justify-center text-center p-4">
-                        <Award className="w-8 h-8 text-cyan-400 mb-2" />
-                        <span className="text-xs font-mono text-slate-400">{cert.title}</span>
+                        <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-2.5">
+                          <Award className="w-6 h-6 text-cyan-400" />
+                        </div>
+                        <span className="text-xs font-mono text-slate-200 font-semibold mb-1 line-clamp-1">{cert.title}</span>
+                        <div className="mt-1 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-700/80 text-[11px] font-mono text-cyan-400">
+                          {cert.imageUrl?.replace('/certificates/', '')}
+                        </div>
                       </div>
                     )}
 
@@ -148,22 +131,6 @@ export const CertificatesSection: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    {/* Upload / replace certificate */}
-                    <button
-                      onClick={() => fileInputRefs.current[cert.id]?.click()}
-                      className="p-2 rounded-xl bg-slate-950/70 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer text-xs"
-                      title="Attach or replace scanned certificate file"
-                    >
-                      <Upload className="w-3.5 h-3.5" />
-                    </button>
-                    <input
-                      ref={(el) => (fileInputRefs.current[cert.id] = el)}
-                      type="file"
-                      accept="image/*,.pdf"
-                      onChange={(e) => handleUploadCertImage(cert.id, e)}
-                      className="hidden"
-                    />
-
                     <button
                       id={`view-cert-btn-${cert.id}`}
                       onClick={() => setSelectedCert(cert)}
@@ -184,7 +151,7 @@ export const CertificatesSection: React.FC = () => {
       {/* Fullscreen Lightbox Viewer */}
       <CertificateLightbox
         certificate={selectedCert}
-        customImage={selectedCert ? (certImages[selectedCert.id] || selectedCert.imageUrl) : undefined}
+        customImage={selectedCert?.imageUrl}
         onClose={() => setSelectedCert(null)}
       />
     </section>

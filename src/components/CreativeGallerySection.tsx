@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Palette, Sparkles, Filter, Plus, X, Eye, Sliders, 
-  Upload, Tag, ExternalLink, Image as ImageIcon, Video, Check 
+  Palette, Sliders, Eye, X 
 } from 'lucide-react';
 import { INITIAL_CREATIVE_WORKS } from '../data/portfolioData';
 import { CreativeItem } from '../types';
@@ -14,69 +13,14 @@ const CATEGORIES = [
 ];
 
 export const CreativeGallerySection: React.FC = () => {
-  const [works, setWorks] = useState<CreativeItem[]>(() => {
-    const saved = localStorage.getItem('dipesh_creative_works');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    return INITIAL_CREATIVE_WORKS;
-  });
-
+  const works: CreativeItem[] = INITIAL_CREATIVE_WORKS;
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedPreview, setSelectedPreview] = useState<CreativeItem | null>(null);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [comparisonSlider, setComparisonSlider] = useState(50);
-
-  // New Work Form State
-  const [newTitle, setNewTitle] = useState('');
-  const [newCategory, setNewCategory] = useState('Photo Editing');
-  const [newDescription, setNewDescription] = useState('');
-  const [newImageUrl, setNewImageUrl] = useState('');
-  const [newTags, setNewTags] = useState('');
 
   const filteredWorks = activeFilter === 'All'
     ? works
     : works.filter((w) => w.category === activeFilter || w.tags.includes(activeFilter));
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        setNewImageUrl(ev.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleAddWork = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newTitle.trim() || !newImageUrl.trim()) return;
-
-    const newWork: CreativeItem = {
-      id: `cw-${Date.now()}`,
-      title: newTitle.trim(),
-      category: newCategory,
-      description: newDescription.trim() || 'Creative visual composition and image editing project.',
-      imageUrl: newImageUrl,
-      tags: newTags.split(',').map((t) => t.trim()).filter(Boolean),
-    };
-
-    const updated = [newWork, ...works];
-    setWorks(updated);
-    localStorage.setItem('dipesh_creative_works', JSON.stringify(updated));
-
-    // Reset Form
-    setNewTitle('');
-    setNewDescription('');
-    setNewImageUrl('');
-    setNewTags('');
-    setIsAddModalOpen(false);
-  };
 
   return (
     <section id="editing" className="py-24 relative z-10">
@@ -96,9 +40,8 @@ export const CreativeGallerySection: React.FC = () => {
           </p>
         </div>
 
-        {/* Categories Bar & Add New Project Trigger */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 mb-10">
-          
+        {/* Categories Bar */}
+        <div className="flex items-center justify-center mb-10">
           {/* Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-md">
             {CATEGORIES.map((cat) => (
@@ -115,20 +58,11 @@ export const CreativeGallerySection: React.FC = () => {
               </button>
             ))}
           </div>
-
-          {/* Add Artwork Button */}
-          <button
-            onClick={() => setIsAddModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 text-xs font-semibold cursor-pointer transition-all hover:scale-105"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Creative Work</span>
-          </button>
         </div>
 
         {/* Masonry Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredWorks.map((item, idx) => (
+          {filteredWorks.map((item) => (
             <div
               key={item.id}
               onClick={() => setSelectedPreview(item)}
@@ -229,7 +163,7 @@ export const CreativeGallerySection: React.FC = () => {
               </button>
             </div>
 
-            {/* If Before / After exists, show interactive slider! */}
+            {/* If Before / After exists, show interactive slider */}
             {selectedPreview.beforeImageUrl ? (
               <div className="mb-6 space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono text-slate-400">
@@ -269,44 +203,48 @@ export const CreativeGallerySection: React.FC = () => {
 
                   {/* Vertical Divider Line */}
                   <div
-                    className="absolute top-0 bottom-0 w-1 bg-white shadow-lg pointer-events-none"
+                    className="absolute top-0 bottom-0 w-1 bg-white shadow-2xl pointer-events-none"
                     style={{ left: `${comparisonSlider}%` }}
-                  />
+                  >
+                    <div className="absolute top-1/2 -translate-y-1/2 -left-3.5 w-8 h-8 rounded-full bg-purple-500 border-2 border-white flex items-center justify-center text-white shadow-lg">
+                      <Sliders className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
 
                   {/* Interactive Slider Input Overlay */}
                   <input
                     type="range"
-                    min="0"
-                    max="100"
+                    min={0}
+                    max={100}
                     value={comparisonSlider}
                     onChange={(e) => setComparisonSlider(Number(e.target.value))}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize"
+                    className="absolute inset-0 opacity-0 cursor-ew-resize w-full h-full z-20"
                   />
                 </div>
               </div>
             ) : (
-              /* Standard high-res image view */
-              <div className="rounded-2xl overflow-hidden border border-slate-800 mb-6 max-h-[60vh] flex items-center justify-center bg-black/40">
+              /* Single Full Preview */
+              <div className="mb-6 rounded-2xl overflow-hidden border border-slate-800 max-h-[60vh] flex items-center justify-center bg-slate-950">
                 <img
                   src={selectedPreview.imageUrl}
                   alt={selectedPreview.title}
-                  className="w-full h-auto max-h-[60vh] object-contain rounded-xl"
+                  className="w-full h-full max-h-[60vh] object-contain"
                   referrerPolicy="no-referrer"
                 />
               </div>
             )}
 
-            {/* Work Details */}
-            <p className="text-sm text-slate-300 leading-relaxed mb-6 font-normal">
+            {/* Description & Tags */}
+            <p className="text-sm text-slate-300 leading-relaxed mb-4">
               {selectedPreview.description}
             </p>
 
             <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {selectedPreview.tags.map((tg) => (
                   <span
                     key={tg}
-                    className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-xs font-mono text-purple-300"
+                    className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-xs font-mono text-purple-300"
                   >
                     #{tg}
                   </span>
@@ -320,120 +258,6 @@ export const CreativeGallerySection: React.FC = () => {
                 Close Showcase
               </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Add New Creative Work Modal */}
-      {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-          <div className="w-full max-w-lg rounded-3xl bg-[#0a0f26] border border-purple-500/30 p-6 sm:p-8 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
-              <div className="flex items-center gap-2">
-                <Plus className="w-4 h-4 text-purple-400" />
-                <h3 className="font-display font-bold text-lg text-white">
-                  Add Creative Editing Showcase
-                </h3>
-              </div>
-              <button
-                onClick={() => setIsAddModalOpen(false)}
-                className="p-1.5 rounded-xl bg-slate-900 text-slate-400 hover:text-white cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <form onSubmit={handleAddWork} className="space-y-4">
-              <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">Project Title</label>
-                <input
-                  type="text"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="e.g. Neon Portrait Color Grade"
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-purple-400 focus:outline-none"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">Category</label>
-                <select
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-purple-400 focus:outline-none"
-                >
-                  {CATEGORIES.filter((c) => c !== 'All').map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">Image Source</label>
-                <div className="space-y-2">
-                  <input
-                    type="url"
-                    value={newImageUrl}
-                    onChange={(e) => setNewImageUrl(e.target.value)}
-                    placeholder="Enter image URL or upload below..."
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-purple-400 focus:outline-none"
-                  />
-                  <div className="flex items-center gap-2">
-                    <label className="flex-1 cursor-pointer flex items-center justify-center gap-2 py-2 px-3 rounded-xl border border-dashed border-slate-700 hover:border-purple-500 bg-slate-950/60 text-xs text-slate-400 hover:text-purple-300 transition-colors">
-                      <Upload className="w-3.5 h-3.5" />
-                      <span>Upload local image</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileUpload}
-                        className="hidden"
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">Description</label>
-                <textarea
-                  rows={2}
-                  value={newDescription}
-                  onChange={(e) => setNewDescription(e.target.value)}
-                  placeholder="Editing technique, color harmony, software used..."
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-purple-400 focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">Tags (comma separated)</label>
-                <input
-                  type="text"
-                  value={newTags}
-                  onChange={(e) => setNewTags(e.target.value)}
-                  placeholder="Photo Editing, Video Editing, Social Media"
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-purple-400 focus:outline-none"
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
-                <button
-                  type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300 hover:bg-slate-700 cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold text-xs cursor-pointer shadow-lg shadow-purple-500/20"
-                >
-                  Add to Gallery
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       )}

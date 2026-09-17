@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Mail, Send, Linkedin, Github, FileText, CheckCircle2, 
-  Sparkles, Copy, Check, Edit3, X, ArrowUpRight, MessageSquare 
+  Sparkles, Copy, Check, ArrowUpRight, MessageSquare 
 } from 'lucide-react';
 import { INITIAL_SOCIAL_LINKS } from '../data/portfolioData';
 import { SocialLinks } from '../types';
@@ -11,17 +11,7 @@ interface ContactSectionProps {
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) => {
-  const [socialLinks, setSocialLinks] = useState<SocialLinks>(() => {
-    const saved = localStorage.getItem('dipesh_social_links');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    return INITIAL_SOCIAL_LINKS;
-  });
+  const socialLinks: SocialLinks = INITIAL_SOCIAL_LINKS;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -31,8 +21,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
 
   const [submitted, setSubmitted] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  const [isEditingLinks, setIsEditingLinks] = useState(false);
-  const [tempLinks, setTempLinks] = useState<SocialLinks>(socialLinks);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(socialLinks.email || 'dipeshydv908@gmail.com');
@@ -47,28 +35,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
     // Simulate reliable sending & prepare mailto fallback
     setSubmitted(true);
     setTimeout(() => {
-      // open mailto
       const mailtoUrl = `mailto:${socialLinks.email}?subject=Portfolio Contact from ${encodeURIComponent(
         formData.name
       )}&body=${encodeURIComponent(formData.message + '\n\nFrom: ' + formData.name + ' (' + formData.email + ')')}`;
       window.location.href = mailtoUrl;
     }, 800);
-  };
-
-  const handleSaveSocialLinks = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSocialLinks(tempLinks);
-    localStorage.setItem('dipesh_social_links', JSON.stringify(tempLinks));
-    setIsEditingLinks(false);
-  };
-
-  const handleSocialClick = (url: string | undefined, platformName: string) => {
-    if (url && url.trim().length > 0) {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    } else {
-      setTempLinks(socialLinks);
-      setIsEditingLinks(true);
-    }
   };
 
   return (
@@ -79,7 +50,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
         <div className="flex flex-col items-center text-center mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-mono">
             <Mail className="w-3.5 h-3.5" />
-            <span>06 // LET'S CONNECT</span>
+            <span>07 // LET'S CONNECT</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold font-display text-white tracking-tight">
             Get In <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Touch</span>
@@ -131,68 +102,80 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
                 </button>
               </div>
 
-              {/* Social Buttons Requested in Prompt */}
+              {/* Social Buttons */}
               <div className="space-y-3 pt-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono text-slate-400">CONNECT ON PLATFORMS</span>
-                  <button
-                    onClick={() => {
-                      setTempLinks(socialLinks);
-                      setIsEditingLinks(true);
-                    }}
-                    className="inline-flex items-center gap-1 text-[11px] font-mono text-cyan-400 hover:text-cyan-300 cursor-pointer"
-                  >
-                    <Edit3 className="w-3 h-3" />
-                    <span>Edit Links</span>
-                  </button>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* LinkedIn Button */}
-                  <button
+                  <a
                     id="contact-linkedin-btn"
-                    onClick={() => handleSocialClick(socialLinks.linkedin, 'LinkedIn')}
+                    href={socialLinks.linkedin || 'https://www.linkedin.com'}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-between px-4 py-3 rounded-2xl bg-slate-950/60 hover:bg-[#0077b5]/15 border border-slate-800 hover:border-[#0077b5]/40 text-slate-200 hover:text-white transition-all cursor-pointer group"
                   >
                     <div className="flex items-center gap-2.5">
                       <Linkedin className="w-4 h-4 text-[#0077b5]" />
                       <span className="text-xs font-semibold">LinkedIn</span>
                     </div>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors" />
-                  </button>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0077b5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
 
                   {/* GitHub Button */}
-                  <button
+                  <a
                     id="contact-github-btn"
-                    onClick={() => handleSocialClick(socialLinks.github, 'GitHub')}
-                    className="flex items-center justify-between px-4 py-3 rounded-2xl bg-slate-950/60 hover:bg-slate-800 border border-slate-800 hover:border-slate-600 text-slate-200 hover:text-white transition-all cursor-pointer group"
+                    href={socialLinks.github || 'https://github.com/dipeshydv908'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between px-4 py-3 rounded-2xl bg-slate-950/60 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 hover:text-white transition-all cursor-pointer group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Github className="w-4 h-4 text-slate-300" />
+                      <Github className="w-4 h-4 text-slate-200" />
                       <span className="text-xs font-semibold">GitHub</span>
                     </div>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors" />
-                  </button>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Resume Quick Access Banner */}
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/40 to-slate-950/80 border border-purple-500/20 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-300">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-white">Full Resume Available</p>
+                    <p className="text-[11px] text-slate-400 font-mono">PDF Format • 2025 Updates</p>
+                  </div>
                 </div>
 
-                {/* Download Resume Button */}
                 <button
-                  id="contact-resume-btn"
+                  id="contact-open-resume-btn"
                   onClick={onOpenResume}
-                  className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700/90 text-slate-100 border border-slate-700 font-semibold text-xs tracking-wide transition-all cursor-pointer shadow-md hover:border-cyan-500/30"
+                  className="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition-colors cursor-pointer shadow-md shadow-purple-500/20"
                 >
-                  <FileText className="w-4 h-4 text-cyan-400" />
-                  <span>Download Complete Resume</span>
+                  View
                 </button>
               </div>
             </div>
+
+            {/* Quick response commitment pill */}
+            <div className="p-4 rounded-2xl bg-cyan-950/20 border border-cyan-500/20 flex items-center gap-3">
+              <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
+              <p className="text-xs text-cyan-200/90 leading-relaxed font-mono">
+                Fast responses guaranteed for internship inquiries, project builds, and technical discussions.
+              </p>
+            </div>
           </div>
 
-          {/* Right Column: Interactive Message Form (7 cols) */}
+          {/* Right Column: Interactive Direct Message Form (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="p-8 rounded-3xl bg-slate-900/60 border border-slate-800/90 backdrop-blur-xl shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-
+            <div className="p-8 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800/90 backdrop-blur-xl shadow-xl">
+              
               <div className="flex items-center gap-2 mb-6">
                 <MessageSquare className="w-4 h-4 text-cyan-400" />
                 <h3 className="font-display font-bold text-xl text-white">
@@ -201,80 +184,82 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
               </div>
 
               {submitted ? (
-                <div className="p-8 rounded-2xl bg-cyan-950/40 border border-cyan-500/40 text-center space-y-4 animate-fadeIn">
-                  <div className="w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center mx-auto">
+                <div className="p-8 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 text-center space-y-4 animate-fadeIn">
+                  <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
-                  <h4 className="font-display font-bold text-lg text-white">
-                    Message Ready!
+                  <h4 className="text-lg font-bold font-display text-white">
+                    Opening Your Email Client...
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-300 max-w-sm mx-auto">
-                    Thank you, {formData.name}. Your email client is launching with your message to Dipesh.
+                  <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
+                    Thank you, <span className="text-emerald-400 font-semibold">{formData.name}</span>! Your email client has been prepared with your message to <span className="font-mono text-cyan-300">{socialLinks.email}</span>.
                   </p>
                   <button
                     onClick={() => {
                       setSubmitted(false);
                       setFormData({ name: '', email: '', message: '' });
                     }}
-                    className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs cursor-pointer"
+                    className="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors cursor-pointer"
                   >
                     Send Another Message
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <div>
-                    <label className="block text-xs font-mono text-slate-300 mb-1.5">
-                      Your Name *
-                    </label>
-                    <input
-                      id="contact-form-name"
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. John Doe / Hiring Manager"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 text-white text-sm focus:border-cyan-400 focus:outline-none transition-colors"
-                      required
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-xs font-mono text-slate-400 mb-2">
+                        Your Name <span className="text-cyan-400">*</span>
+                      </label>
+                      <input
+                        id="contact-input-name"
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="John Doe"
+                        required
+                        className="w-full px-4 py-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-sans"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-mono text-slate-400 mb-2">
+                        Your Email Address <span className="text-cyan-400">*</span>
+                      </label>
+                      <input
+                        id="contact-input-email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="john@example.com"
+                        required
+                        className="w-full px-4 py-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-sans"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-slate-300 mb-1.5">
-                      Your Email *
-                    </label>
-                    <input
-                      id="contact-form-email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="e.g. john@example.com"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 text-white text-sm focus:border-cyan-400 focus:outline-none transition-colors"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-mono text-slate-300 mb-1.5">
-                      Message *
+                    <label className="block text-xs font-mono text-slate-400 mb-2">
+                      Message / Project Details <span className="text-cyan-400">*</span>
                     </label>
                     <textarea
-                      id="contact-form-message"
+                      id="contact-input-message"
                       rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Tell me about your internship opening, project, or message..."
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 text-white text-sm focus:border-cyan-400 focus:outline-none transition-colors"
+                      placeholder="Hi Dipesh, I came across your portfolio and would like to discuss an opportunity or engineering project..."
                       required
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-sans resize-none"
                     />
                   </div>
 
                   <button
                     id="contact-submit-btn"
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-cyan-400 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 hover:shadow-cyan-400/40 transition-all cursor-pointer active:scale-98"
+                    className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-cyan-400 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 hover:shadow-cyan-400/40 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Send Message</span>
+                    <span>Send Message Directly</span>
+                    <Send className="w-4 h-4 text-slate-950" />
                   </button>
                 </form>
               )}
@@ -284,79 +269,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
         </div>
 
       </div>
-
-      {/* Edit Social Links Drawer/Modal */}
-      {isEditingLinks && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-          <div className="w-full max-w-md rounded-3xl bg-[#090d24] border border-cyan-500/30 p-6 sm:p-8 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
-              <div className="flex items-center gap-2">
-                <Edit3 className="w-4 h-4 text-cyan-400" />
-                <h3 className="font-display font-bold text-lg text-white">
-                  Configure Social &amp; Contact Links
-                </h3>
-              </div>
-              <button
-                onClick={() => setIsEditingLinks(false)}
-                className="p-1.5 rounded-xl bg-slate-900 text-slate-400 hover:text-white cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSaveSocialLinks} className="space-y-4">
-              <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">Email Address</label>
-                <input
-                  type="email"
-                  value={tempLinks.email}
-                  onChange={(e) => setTempLinks({ ...tempLinks, email: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-cyan-400 focus:outline-none"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">LinkedIn Profile URL</label>
-                <input
-                  type="url"
-                  value={tempLinks.linkedin || ''}
-                  onChange={(e) => setTempLinks({ ...tempLinks, linkedin: e.target.value })}
-                  placeholder="https://linkedin.com/in/dipesh"
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-cyan-400 focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">GitHub Profile URL</label>
-                <input
-                  type="url"
-                  value={tempLinks.github || ''}
-                  onChange={(e) => setTempLinks({ ...tempLinks, github: e.target.value })}
-                  placeholder="https://github.com/dipesh"
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:border-cyan-400 focus:outline-none"
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
-                <button
-                  type="button"
-                  onClick={() => setIsEditingLinks(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300 hover:bg-slate-700 cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-xs cursor-pointer shadow-md shadow-cyan-500/20"
-                >
-                  Save Links
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

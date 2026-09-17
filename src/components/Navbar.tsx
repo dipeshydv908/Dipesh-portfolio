@@ -69,7 +69,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
             </div>
           </div>
           <span className="font-display tracking-wider text-base font-bold bg-gradient-to-r from-slate-100 via-cyan-100 to-slate-300 bg-clip-text text-transparent">
-            DIPESH<span className="text-cyan-400">.DEV</span>
+            DIPESH
           </span>
           <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono font-medium rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
             CSE '29
